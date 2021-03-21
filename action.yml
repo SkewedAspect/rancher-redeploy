@@ -1,0 +1,15 @@
+#-----------------------------------------------------------------------------------------------------------------------
+# GitHub Action
+#-----------------------------------------------------------------------------------------------------------------------
+
+name: Rancher v2 Workload Redeploy
+description: An action for redeploying Rancher v2 workloads
+author: Christopher Case
+branding:
+    icon: terminal
+    color: blue
+runs:
+    using: docker
+    image: docker://morgul/rancher-redeploy:latest
+
+#-----------------------------------------------------------------------------------------------------------------------
