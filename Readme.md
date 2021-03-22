@@ -64,8 +64,8 @@ $ docker run --rm -it \
     -e RANCHER_PROJECT_ID="p-sk738f" \
     -e RANCHER_URL="https://rancher.example.com" \
     -e RANCHER_WORKLOADS="my-workload" \
-    -e IMAGE_TAG="v1.2.0"
-    morgul/rancher-redeploy:latest
+    -e IMAGE_TAG="v1.2.0" \
+    SkewedAspect/rancher-redeploy:latest
 ```
 
 (Remember when copying this that `IMAGE_TAG` is optional, and you may not want to include it.)
@@ -74,7 +74,7 @@ $ docker run --rm -it \
 
 ```yaml
   - name: Update rancher deployment
-    uses: morgul/rancher-redeploy@latest
+    uses: SkewedAspect/rancher-redeploy@latest
     env:
       RANCHER_BEARER_TOKEN: ${{ secrets.RANCHER_BEARER_TOKEN }}
       RANCHER_CLUSTER_ID: 'c-kwbgu'
@@ -115,7 +115,7 @@ build docker:
     
 deploy docker:
     stage: deploy
-    image: morgul/rancher-deploy:latest
+    image: SkewedAspect/rancher-deploy:latest
     only:
         - /^v\d+\.\d+\.\d+.*/
     except:
