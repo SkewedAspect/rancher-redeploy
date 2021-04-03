@@ -63,7 +63,7 @@ $ docker run --rm -it \
     -e RANCHER_NAMESPACE="namespace" \
     -e RANCHER_PROJECT_ID="p-sk738f" \
     -e RANCHER_URL="https://rancher.example.com" \
-    -e RANCHER_WORKLOADS="my-workload" \
+    -e RANCHER_WORKLOAD="my-workload" \
     -e IMAGE_TAG="v1.2.0" \
     SkewedAspect/rancher-redeploy:latest
 ```
@@ -81,7 +81,7 @@ $ docker run --rm -it \
       RANCHER_NAMESPACE: 'namespace'
       RANCHER_PROJECT_ID: 'p-sk738f'
       RANCHER_URL: 'https://rancher.example.com'
-      RANCHER_WORKLOADS: 'my-workload'
+      RANCHER_WORKLOAD: 'my-workload'
       IMAGE_TAG: 'v1.2.0'
 ```
 
@@ -127,7 +127,7 @@ deploy docker:
         RANCHER_NAMESPACE="namespace"
         RANCHER_PROJECT_ID="p-sk738f"
         RANCHER_URL="https://rancher.example.com"
-        RANCHER_WORKLOADS="my-workload"
+        RANCHER_WORKLOAD="my-workload"
         IMAGE_TAG="v1.2.0"
     # GitLab requires a script block
     script:
