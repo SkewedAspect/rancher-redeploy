@@ -65,7 +65,7 @@ $ docker run --rm -it \
     -e RANCHER_URL="https://rancher.example.com" \
     -e RANCHER_WORKLOAD="my-workload" \
     -e IMAGE_TAG="v1.2.0" \
-    SkewedAspect/rancher-redeploy:latest
+    skewedaspect/rancher-redeploy:latest
 ```
 
 (Remember when copying this that `IMAGE_TAG` is optional, and you may not want to include it.)
