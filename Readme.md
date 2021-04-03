@@ -74,7 +74,7 @@ $ docker run --rm -it \
 
 ```yaml
   - name: Update rancher deployment
-    uses: SkewedAspect/rancher-redeploy@v0.3.0
+    uses: SkewedAspect/rancher-redeploy@v0.3.1
     env:
       RANCHER_BEARER_TOKEN: ${{ secrets.RANCHER_BEARER_TOKEN }}
       RANCHER_CLUSTER_ID: 'c-kwbgu'

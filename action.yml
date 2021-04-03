@@ -10,6 +10,6 @@ branding:
     color: blue
 runs:
     using: docker
-    image: docker://skewedaspect/rancher-redeploy:0.3.0
+    image: docker://skewedaspect/rancher-redeploy:0.3.1
 
 #-----------------------------------------------------------------------------------------------------------------------
