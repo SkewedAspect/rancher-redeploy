@@ -2,7 +2,7 @@
 // Rancher Redeploy Script
 // ---------------------------------------------------------------------------------------------------------------------
 
-import axios from 'axios';
+const axios = require('axios');
 
 // ---------------------------------------------------------------------------------------------------------------------
 
@@ -59,28 +59,43 @@ function buildImage(image)
 
 // ---------------------------------------------------------------------------------------------------------------------
 
-console.log('Redeploying workload...')
+async function main()
+{
+    console.log('Redeploying workload...')
 
-// Step 1: Get the workload
-const { data } = await axios.get(workloadURL, { headers });
+    // Step 1: Get the workload
+    const { data } = await axios.get(workloadURL, { headers });
 
-// Step 2: Modify the workload
-const workload = {
-    ...data,
-    annotations: {
-        ...data.annotations,
-        'cattle.io/timestamp': new Date().toISOString()
-    },
-    containers: [{
-        ...data.containers[0],
-        image: buildImage(data.containers[0].image)
-    }]
-};
+    // Step 2: Modify the workload
+    const workload = {
+        ...data,
+        annotations: {
+            ...data.annotations,
+            'cattle.io/timestamp': new Date().toISOString()
+        },
+        containers: [{
+            ...data.containers[0],
+            image: buildImage(data.containers[0].image)
+        }]
+    };
 
-// Step 3: Push the modified workload
-await axios.put(workloadURL, workload, { headers });
+    // Step 3: Push the modified workload
+    await axios.put(workloadURL, workload, { headers });
+}
 
-// Step 4: Complete
-console.log('Workload successfully deployed.')
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+main()
+    .then(() =>
+    {
+        console.log('Workload successfully deployed.')
+        process.exit(0);
+    })
+    .catch((error) =>
+    {
+        console.error(error.message);
+        process.exit(1);
+    });
 
 // ---------------------------------------------------------------------------------------------------------------------

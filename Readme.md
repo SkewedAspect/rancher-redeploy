@@ -1,7 +1,7 @@
 # Rancher v2 Workload Redeploy
 
 This action is heavily inspired by [th0th/rancher-redeploy-workload][]. Unfortunately, it wouldn't work on my 
-rancher install, but recreating it in Node.JS was trivial, and it just seems to work. I also added the ability to 
+rancher install, but recreating it in Node.js was trivial, and it just seems to work. I also added the ability to 
 replace the image tag currently being deployed, since I have a use case for that. Huge props to that project for the 
 methodology and inspiration.
 
@@ -52,24 +52,6 @@ Once you do that, you will only have one opportunity to copy down the bearer tok
 
 Copy that value (starting with `token-`) as the `RANCHER_BEARER_TOKEN`.
 
-### Docker container
-
-You can run this as a plain docker:
-
-```bash
-$ docker run --rm -it \
-    -e RANCHER_BEARER_TOKEN="token-f4pzb:n81cpz9ptm5915prtkwfx9ptg21wfkk6r1pnmwh1s6rd16sxhb67pp" \
-    -e RANCHER_CLUSTER_ID="c-kwbgu" \
-    -e RANCHER_NAMESPACE="namespace" \
-    -e RANCHER_PROJECT_ID="p-sk738f" \
-    -e RANCHER_URL="https://rancher.example.com" \
-    -e RANCHER_WORKLOAD="my-workload" \
-    -e IMAGE_TAG="v1.2.0" \
-    skewedaspect/rancher-redeploy:latest
-```
-
-(Remember when copying this that `IMAGE_TAG` is optional, and you may not want to include it.)
-
 ### GitHub Action
 
 ```yaml
@@ -86,50 +68,3 @@ $ docker run --rm -it \
 ```
 
 (Remember when copying this that `IMAGE_TAG` is optional, and you may not want to include it.)
-
-### GitLab
-
-Since this is available as a docker image, you can easily plug it into your `gitlab-ci.yml`:
-
-```yml
-stages:
-  - build
-  - deploy
-    
-build docker:
-    stage: build
-    image: docker:latest
-    services:
-        - docker:dind
-    variables:
-        GIT_DEPTH: 1
-    only:
-        - /^v\d+\.\d+\.\d+.*/
-    except:
-        - branches
-    script:
-        - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
-        - docker build -t registry.gitlab.com/example/my-workload:latest -t registry.gitlab.com/example/my-workload:$CI_BUILD_REF_NAME .
-        - docker push registry.gitlab.com/example/my-workload:latest
-        - docker push registry.gitlab.com/example/my-workload:$CI_BUILD_REF_NAME
-    
-deploy docker:
-    stage: deploy
-    image: SkewedAspect/rancher-deploy:latest
-    only:
-        - /^v\d+\.\d+\.\d+.*/
-    except:
-        - branches
-    when: manual
-    variables:
-        RANCHER_BEARER_TOKEN="token-f4pzb:n81cpz9ptm5915prtkwfx9ptg21wfkk6r1pnmwh1s6rd16sxhb67pp"
-        RANCHER_CLUSTER_ID="c-kwbgu"
-        RANCHER_NAMESPACE="namespace"
-        RANCHER_PROJECT_ID="p-sk738f"
-        RANCHER_URL="https://rancher.example.com"
-        RANCHER_WORKLOAD="my-workload"
-        IMAGE_TAG="v1.2.0"
-    # GitLab requires a script block
-    script:
-        - node ./deploy.js
-```
