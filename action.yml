@@ -9,7 +9,7 @@ branding:
     icon: terminal
     color: blue
 runs:
-    using: docker
-    image: docker://skewedaspect/rancher-redeploy:0.3.1
+    using: node12
+    main: deploy.js
 
 #-----------------------------------------------------------------------------------------------------------------------
