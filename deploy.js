@@ -2,7 +2,7 @@
 // Rancher Redeploy Script
 // ---------------------------------------------------------------------------------------------------------------------
 
-const axios = require('axios');
+const http = require('./lib/http');
 
 // ---------------------------------------------------------------------------------------------------------------------
 
@@ -42,7 +42,7 @@ const headers = {
     Authorization: `Bearer ${ RANCHER_BEARER_TOKEN }`
 }
 
-const workloadURL = `${RANCHER_URL}/v3/project/${RANCHER_CLUSTER_ID}:${RANCHER_PROJECT_ID}/workloads/deployment:${RANCHER_NAMESPACE}:${RANCHER_WORKLOAD}`
+const workloadURL = `${RANCHER_URL}//v3/project/${RANCHER_CLUSTER_ID}:${RANCHER_PROJECT_ID}/workloads/deployment:${RANCHER_NAMESPACE}:${RANCHER_WORKLOAD}`
 
 // ---------------------------------------------------------------------------------------------------------------------
 
@@ -64,7 +64,7 @@ async function main()
     console.log('Redeploying workload...')
 
     // Step 1: Get the workload
-    const { data } = await axios.get(workloadURL, { headers });
+    const data = await http.get(workloadURL, { headers });
 
     // Step 2: Modify the workload
     const workload = {
@@ -80,7 +80,7 @@ async function main()
     };
 
     // Step 3: Push the modified workload
-    await axios.put(workloadURL, workload, { headers });
+    await http.put(workloadURL, workload, { headers });
 }
 
 

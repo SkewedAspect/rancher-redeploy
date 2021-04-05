@@ -3,8 +3,8 @@
   "version": "0.4.1",
   "description": "A simple script to redeploy a rancher workload.",
   "main": "deploy.js",
-  "type": "module",
   "scripts": {
+    "start": "node ./deploy.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -13,8 +13,5 @@
     "deploy"
   ],
   "author": "Christopher S. Case <chris.case@g33xnexus.com>",
-  "license": "MIT",
-  "dependencies": {
-    "axios": "^0.21.1"
-  }
+  "license": "MIT"
 }
